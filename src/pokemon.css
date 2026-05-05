@@ -1,0 +1,397 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Montserrat:wght@700;800;900&display=swap');
+
+:root {
+  --red:         #cc0000;
+  --red-dark:    #a00000;
+  --yellow:      #ffcb05;
+  --yellow-dark: #e6b800;
+  --blue:        #3b4cca;
+  --white:       #ffffff;
+  --off-white:   #f4f4f4;
+  --border:      #e0e0e0;
+  --text:        #1a1a1a;
+  --text-mid:    #555555;
+  --text-light:  #888888;
+  --font-body:   'Lato', sans-serif;
+  --font-head:   'Montserrat', sans-serif;
+  --radius-card: 12px;
+  --radius-pill: 50px;
+  --shadow-sm:   0 2px 8px rgba(0,0,0,0.09);
+  --shadow-md:   0 6px 24px rgba(0,0,0,0.14);
+}
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background-color: var(--off-white);
+  font-family: var(--font-body);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   HEADER  — pokemon.com red top bar
+   ============================================ */
+.header {
+  width: 100%;
+  background: var(--red);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 36px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  /* Yellow stripe at bottom — signature pokemon.com detail */
+  border-bottom: 4px solid var(--yellow);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* Pokeball ring decorations inside header */
+.header::before {
+  content: "";
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 10px solid rgba(255,255,255,0.12);
+  pointer-events: none;
+}
+
+/* ============================================
+   PAGE WRAPPER — centers everything
+   ============================================ */
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   SEARCH ROW  (input + Search button)
+   ============================================ */
+#root > div > div:first-of-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px 12px;
+}
+
+.input {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-right: none;
+  border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+  padding: 11px 22px;
+  width: 300px;
+  outline: none;
+  transition: border-color 0.18s;
+}
+
+.input::placeholder {
+  color: #bbb;
+  font-weight: 400;
+}
+
+.input:focus {
+  border-color: var(--red);
+}
+
+/* ============================================
+   BUTTONS — base reset
+   ============================================ */
+button {
+  font-family: var(--font-head);
+  font-weight: 800;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+button:active {
+  transform: scale(0.97) translateY(1px) !important;
+}
+
+/* --- Search button (joins the input) --- */
+button:not(.load-more-btn):not(.surprise-btn) {
+  background: var(--red);
+  color: var(--white);
+  font-size: 0.88rem;
+  border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+  padding: 11px 26px;
+  box-shadow: none;
+}
+
+button:not(.load-more-btn):not(.surprise-btn):hover {
+  background: var(--red-dark);
+}
+
+/* --- Surprise Me button --- */
+.surprise-btn {
+  display: block;
+  margin: 18px auto 6px;
+  background: var(--yellow);
+  color: var(--text);
+  font-size: 0.88rem;
+  border-radius: var(--radius-pill);
+  padding: 12px 34px;
+  box-shadow: 0 3px 0 var(--yellow-dark), var(--shadow-sm);
+}
+
+.surprise-btn:hover {
+  background: var(--yellow-dark);
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 #c49900, var(--shadow-sm);
+}
+
+/* --- Load More button --- */
+.load-more-btn {
+  display: block;
+  margin: 20px auto 50px;
+  background: var(--red);
+  color: var(--white);
+  font-size: 0.88rem;
+  border-radius: var(--radius-pill);
+  padding: 13px 44px;
+  min-width: 200px;
+  box-shadow: 0 3px 0 var(--red-dark), var(--shadow-sm);
+  width: auto;
+}
+
+.load-more-btn:hover {
+  background: var(--red-dark);
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 #700000, var(--shadow-sm);
+}
+
+/* ============================================
+   SEARCH RESULT — big artwork images
+   ============================================ */
+img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 170px;
+  max-height: 170px;
+}
+
+/* ============================================
+   GRID OF CARDS
+   ============================================ */
+.multiplePokemon {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+  gap: 16px;
+  padding: 18px 28px 6px;
+  max-width: 1300px;
+  margin: 10px auto 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+/* ============================================
+   POKEMON CARD
+   ============================================ */
+.pokemonCard {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 12px 16px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: cardIn 0.3s ease both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pokemonCard:nth-child(1)  { animation-delay: 0.02s; }
+.pokemonCard:nth-child(2)  { animation-delay: 0.05s; }
+.pokemonCard:nth-child(3)  { animation-delay: 0.07s; }
+.pokemonCard:nth-child(4)  { animation-delay: 0.10s; }
+.pokemonCard:nth-child(5)  { animation-delay: 0.12s; }
+.pokemonCard:nth-child(6)  { animation-delay: 0.15s; }
+.pokemonCard:nth-child(7)  { animation-delay: 0.17s; }
+.pokemonCard:nth-child(8)  { animation-delay: 0.20s; }
+.pokemonCard:nth-child(9)  { animation-delay: 0.22s; }
+.pokemonCard:nth-child(10) { animation-delay: 0.25s; }
+
+/* Red top-border reveal on hover — pokemon.com card signature */
+.pokemonCard::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s ease;
+}
+
+.pokemonCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.pokemonCard:hover::before {
+  transform: scaleX(1);
+}
+
+/* Pokémon image inside card */
+.pokemonCard img,
+.randomPokemonImg {
+  width: 108px !important;
+  height: 108px !important;
+  max-width: 108px !important;
+  max-height: 108px !important;
+  object-fit: contain;
+  background: #f2f2f2;
+  border-radius: 50%;
+  padding: 8px;
+  margin-bottom: 12px;
+  transition: transform 0.22s ease;
+}
+
+.pokemonCard:hover img,
+.pokemonCard:hover .randomPokemonImg {
+  transform: scale(1.08) translateY(-3px);
+}
+
+/* Pokémon name */
+.pokemonCard h3 {
+  font-family: var(--font-head);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text);
+  text-transform: capitalize;
+  text-align: center;
+  margin-bottom: 3px;
+}
+
+/* Data text (weight, id, type) */
+.pokemonCard div {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-light);
+  text-align: center;
+  line-height: 1.8;
+  text-transform: capitalize;
+}
+
+/* First div = name row */
+.pokemonCard > div:first-of-type {
+  font-family: var(--font-head);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 1px;
+}
+
+.type-badge {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 3px 11px;
+  font-family: var(--font-head);
+  font-size: 0.63rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #fff;
+  margin: 5px 2px 0;
+}
+
+.normal   { background: #9a9da1; }
+.fire     { background: #fd7d24; }
+.water    { background: #4592c4; }
+.electric { background: #eed535; color: #333; }
+.grass    { background: #62b957; }
+.ice      { background: #61cec0; }
+.fighting { background: #d56723; }
+.poison   { background: #a552cc; }
+.ground   { background: #e87236; }
+.flying   { background: #748fc9; }
+.psychic  { background: #ea5d60; }
+.bug      { background: #92bc2c; }
+.rock     { background: #bab8a0; color: #444; }
+.ghost    { background: #556aae; }
+.dragon   { background: #0f6ac0; }
+.dark     { background: #595761; }
+.steel    { background: #417d9a; }
+.fairy    { background: #ef97d8; color: #444; }
+
+
+.text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-mid);
+  justify-content: center;
+  padding: 4px 0;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar       { width: 7px; }
+::-webkit-scrollbar-track { background: #ebebeb; }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 4px; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+  .header {
+    font-size: 1.15rem;
+    padding: 0 18px;
+    height: 54px;
+  }
+
+  .multiplePokemon {
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .input {
+    width: 190px;
+  }
+}
